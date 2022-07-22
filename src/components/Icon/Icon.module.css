@@ -1,0 +1,16 @@
+.wrapper {
+  width: 24px;
+  height: 24px;
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.wrapper .svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.2s ease-in-out;
+  fill: var(--darkBlue);
+}

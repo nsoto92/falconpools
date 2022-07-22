@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  height: 65px;
+  background-color: var(--lightGray);
+  align-items: center;
+  justify-content: right;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  column-gap: 8px;
+}
