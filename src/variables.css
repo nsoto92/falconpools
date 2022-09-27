@@ -35,7 +35,11 @@
   --fontWeightBold: 700;
   --fontWeightExtraBold: 800;
   --letterSpacing: 3px;
-  --maxTextWidth: 800px;
+  --maxTextWidth: 1200px;
+  --headerLineHeight: 72.8px;
+  --h1FontSize: 56px;
+  --mediumFontSize: 20px;
+  --bodyLineHeight: 32px;
 
   /* Icons */
   --iconSize: 29px;
