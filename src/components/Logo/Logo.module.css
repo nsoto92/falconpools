@@ -1,3 +1,10 @@
 .wrapper {
   height: 60px;
 }
+
+.header {
+  margin: auto;
+  margin-top: 50px;
+  height: 400px;
+  width: 920px;
+}

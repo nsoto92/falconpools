@@ -21,7 +21,6 @@
   font-weight: var(--fontWeightNormal);
   line-height: var(--bodyLineHeight);
   max-width: 1164px;
-  font-style: italic;
   margin: auto;
 }
 

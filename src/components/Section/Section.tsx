@@ -14,6 +14,7 @@ export const Section: FunctionComponent<SectionProps> = (props): ReactElement =>
     s.push(styles[props.color]);
     return s.join(' ');
   };
+  
   return (
     <div className={getWrapperStyles()}>
       {props.children}
