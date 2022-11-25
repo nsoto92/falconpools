@@ -1,5 +1,4 @@
 import React, { FunctionComponent, ReactElement } from 'react';
-import FPLogo from '../../assets/fpLogo.svg';
 
 import styles from './Logo.module.css';
 
@@ -19,6 +18,6 @@ export const Logo: FunctionComponent<LogoProps> = (props): ReactElement => {
     return s.join(' ');
   };
   return (
-    <img className={getLogoStyles()} src={FPLogo} alt="logo" />
+    <img className={getLogoStyles()} src={'/assets/fpLogo.svg'} alt="logo" />
   );
 };
