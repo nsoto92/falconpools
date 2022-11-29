@@ -1,5 +1,4 @@
 import React from 'react';
-import { Logo } from '../components/Logo/Logo';
 import Page from '../components/Page/Page';
 import styles from './Home.module.css';
 import { AboutUs } from './sections/AboutUs';
@@ -11,7 +10,6 @@ const HomePage = () => {
     <Page>
       <div className={styles.wrapper}>
         <Header />
-        <Logo type="header" />
         <AboutUs />
         <Services />
         <h1>Home Page</h1>
