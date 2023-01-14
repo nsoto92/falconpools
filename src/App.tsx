@@ -1,11 +1,15 @@
-import React from 'react';
-import HomePage from './pages/Home';
+import React, { lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+const HomePage = lazy(() => import('./pages/Home'));
 
 function App() {
   return (
-    <div>
-      <HomePage />
-    </div>
+    <Suspense>
+      <Routes>
+        <Route path={'/dev-home'} element={<HomePage />} />
+      </Routes>
+    </Suspense>
   );
 }
 
