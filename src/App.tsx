@@ -1,15 +1,15 @@
-import React, { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const HomePage = lazy(() => import('./pages/Home'));
 
 function App() {
   return (
-    <Suspense>
+    <BrowserRouter>
       <Routes>
-        <Route path={'/dev-home'} element={<HomePage />} />
+        <Route exact-path={'/'} element={<HomePage />} />
       </Routes>
-    </Suspense>
+    </BrowserRouter>
   );
 }
 
