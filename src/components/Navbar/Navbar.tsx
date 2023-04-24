@@ -16,19 +16,19 @@ const Navbar = () => {
         <Logo />
       </div>
       <div className={styles.socials}>
-        <IconButton>
+        <IconButton target="_blank" href="https://www.facebook.com/falconpoolspr">
           <FacebookIcon />
         </IconButton>
-        <IconButton>
+        <IconButton target="_blank" href="https://twitter.com/falconpoolspr?lang=en">
           <TwitterIcon /> 
         </IconButton>
-        <IconButton>
+        <IconButton target="_blank" href="https://www.tiktok.com/@falconpoolspr/">
           <TikTokIcon />
         </IconButton>
-        <IconButton>
+        <IconButton target="_blank" href="https://www.youtube.com/@falconpoolspr">
           <YouTubeIcon />
         </IconButton>
-        <IconButton>
+        <IconButton target="_blank" href="https://www.instagram.com/falconpoolspr/">
           <InstagramIcon />
         </IconButton>
       </div>
