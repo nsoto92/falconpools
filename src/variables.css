@@ -25,10 +25,6 @@
   --warningDark: #664400;
   --successDark: #165034;
 
-  /* Palette - Gradients */
-  --prnGradient: linear-gradient(138.74deg, var(--prnPink) 0.55%, var(--prnOrange) 80.75%);
-  --prnBlackGradient: linear-gradient(138.74deg, #292f36 0%, #606770 100%);
-
   /* Fonts */
   --fontBody: 'Noto Serif', sans-serif;
   --fontHeaders: 'Inter',sans-serif;

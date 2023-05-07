@@ -4,7 +4,7 @@ import styles from './Section.module.css';
 
 export interface SectionProps {
   children: ReactElement;
-  color: 'white' | 'gray';
+  color: 'white' | 'gray' | 'blue';
 }
 
 export const Section: FunctionComponent<SectionProps> = (props): ReactElement => {

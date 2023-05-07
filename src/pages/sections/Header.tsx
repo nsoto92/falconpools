@@ -1,37 +1,26 @@
 import { Button } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React, { FunctionComponent, ReactElement } from 'react';
 import { Section } from '../../components/Section/Section';
 
 import styles from './Header.module.css';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#F47C4B',
-      contrastText: '#ffffff',
-    },
-  },
-  typography: {
-    fontFamily: 'Noto Serif',
-  },
-});
+import { useIsMobile } from '../../utils/isMobile';
 
 export const Header: FunctionComponent = (): ReactElement => {
+
+  const isMobile = useIsMobile();
 
   return (
     <Section color={'white'}>
       <div className={styles.wrapper}>
-        <div className={styles.bg} />
+        <img className={styles.bgImg} src='/assets/construccion.jpg' alt={'headerImage'} />
         <div className={styles.headerContent}>
-          <h1 className={styles.title}>{'Falcón Pools'}</h1>
-          <div className={styles.divider}/>
-          <div className={styles.content}>
-            <p>{'¡Habla Claro!'}</p>
-          </div>
-          <ThemeProvider theme={theme}>
-            <Button variant="contained">{'Estimados Aquí'}</Button>
-          </ThemeProvider>
+            <Button
+              size={isMobile ? 'small' : 'medium'}
+              variant="contained"
+              href={'https://falconpoolsprhablaclaro.as.me/'}
+            >
+              {'Estimados Aquí'}
+            </Button>
         </div>
       </div>
     </Section>

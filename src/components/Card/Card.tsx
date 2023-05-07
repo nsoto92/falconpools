@@ -3,7 +3,7 @@ import React, { FunctionComponent, ReactElement } from 'react';
 import styles from './Card.module.css';
 
 export interface CardProps {
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 }
 
 export const Card: FunctionComponent<CardProps> = (props): ReactElement => {
