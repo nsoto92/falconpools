@@ -7,7 +7,22 @@
   align-items: center;
   justify-content: center;
   border-radius: 50px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-  background-color: rgb(145,198,240);
+  box-shadow: 2px 4px 20px 0 rgba(0, 0, 0, 0.25);
+  background-color: #c7c4c4;
   margin-bottom: 25px;
+  opacity: 0;
+  transform: translateX(20vw);
+  visibility: hidden;
+  transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+  will-change: opacity, visibility;
+}
+
+.wrapper.even {
+  transform: translateX(20vw);
+}
+
+.wrapper.visible {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
 }

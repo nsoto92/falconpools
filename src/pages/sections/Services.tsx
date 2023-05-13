@@ -1,12 +1,29 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Section } from '../../components/Section/Section';
 import { Card } from '../../components/Card/Card';
 import styles from './Services.module.css';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Modal, Typography } from '@mui/material';
 import { useIsMobile } from '../../utils/isMobile';
 
 export const Services: FunctionComponent = (): ReactElement => {
   const isMobile = useIsMobile();
+  const [ openModal, setOpenModal ] = useState(false);
+
+  const triggerModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '100%',
+    bgcolor: 'ghostwhite',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   const services = [
     {
@@ -56,7 +73,7 @@ export const Services: FunctionComponent = (): ReactElement => {
   return (
     <Section color={'white'}>
       <div className={styles.wrapper}>
-      <Typography
+        <Typography
           variant={isMobile ?'h4' : 'h3'}
           align={'center'}
           sx={{ marginBottom: '25px' }}
@@ -66,9 +83,9 @@ export const Services: FunctionComponent = (): ReactElement => {
         <div className={styles.services}>
           {services.map((service, index) => {
             return (
-              <Card key={index}>
+              <Card key={index} index={index}>
                 <Typography
-                  variant={'h5'}
+                  variant={isMobile ?'h5' : 'h4'}
                   align={'center'}
                 >
                   {service.title}
@@ -87,8 +104,15 @@ export const Services: FunctionComponent = (): ReactElement => {
                 </Typography>
               </Card>
             )
-          })}
+            })}
           <div className={styles.servicesCTA}>
+            <Typography
+              variant={isMobile ?'h5' : 'h4'}
+              align={'center'}
+              sx={{ marginBottom: '25px' }}
+            >
+              {'Sacar cita'}
+            </Typography>
             <Button
               size={isMobile ? 'small' : 'medium'}
               variant="contained"
@@ -96,7 +120,24 @@ export const Services: FunctionComponent = (): ReactElement => {
             >
               {'Estimados Aquí'}
             </Button>
-        </div>
+            <Button
+              size={isMobile ? 'small' : 'medium'}
+              variant="contained"
+              onClick={triggerModal}
+            >
+              {'Calculadora de Galones'}
+            </Button>
+            <Modal
+              open={openModal}
+              onClose={triggerModal}
+              aria-labelledby="parent-modal-title"
+              aria-describedby="parent-modal-description"
+            >
+              <Box sx={{...style}}>
+                <h2 id="parent-modal-title">Text in a modal</h2>
+              </Box>
+            </Modal>
+          </div>
         </div>
       </div>
     </Section>
