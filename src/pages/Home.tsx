@@ -8,55 +8,11 @@ import { Services } from './sections/Services';
 const HomePage = () => {
   return (
     <Page>
-      <div className={styles.wrapper}>
         {/* <h1>Coming soon... Habla claro!</h1> */}
+      <div className={styles.wrapper}>
         <Header />
         <AboutUs />
         <Services />
-        {/* <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1>
-        <h1>Home Page</h1> */}
       </div>
     </Page>
   );

@@ -1,10 +1,11 @@
 .wrapper {
-  width: 60%;
   display: flex;
+  max-width: 900px;
   flex-direction: column;
   row-gap: 25px;
   margin: auto;
-  padding: 60px
+  padding: 60px;
+  padding-bottom: 0;
 }
 
 .title {
@@ -27,7 +28,6 @@
   .wrapper {
     row-gap: 5px;
     padding: 20px;
-    width: 100%;
   }
 
   .title {

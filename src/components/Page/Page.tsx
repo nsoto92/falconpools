@@ -38,6 +38,7 @@ const Page: FunctionComponent<PageProps> = (props): ReactElement => {
       <div className={styles.content}>
         {props.children}
       </div>
+      
       {/* Drawer Logic */}
       <Drawer
       anchor={"top"}
