@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useState, MouseEvent, Fragment } from 'react';
+import React, { FunctionComponent, ReactElement, useState, MouseEvent, Fragment, useEffect } from 'react';
 import { Section } from '../../components/Section/Section';
 import { Card } from '../../components/Card/Card';
 import styles from './Services.module.css';
@@ -6,28 +6,54 @@ import { Box, Button, InputAdornment, Modal, TextField, ToggleButton, ToggleButt
 import { useIsMobile } from '../../utils/isMobile';
 import { services } from '../../locales/es';
 
+export type PoolShapes = 'rectangular' | 'circular' | 'irregular';
+
+
 export const Services: FunctionComponent = (): ReactElement => {
   const isMobile = useIsMobile();
   const [ openModal, setOpenModal ] = useState(false);
-  const [ shape, setShape ] = useState('rectangular');
+  const [ shape, setShape ] = useState('rectangular' as PoolShapes);
   const [ length, setLength ] = useState(0);
   const [ width, setWidth ] = useState(0);
   const [ diameter, setDiameter ] = useState(0);
+  const [ largeDiameter, setLargeDiameter ] = useState(0);
+  const [ smallDiameter, setSmallDiameter ] = useState(0);
   const [ base, setBase ] = useState(0);
   const [ height, setHeight ] = useState(0);
   const [ depth1, setDepth1 ] = useState(0);
   const [ depth2, setDepth2 ] = useState(0);
   const [ volume, setVolume ] = useState(0);
 
+  useEffect(() => {
+    resetValues();
+  }, [volume]);
+
+  const resetValues = () => {
+    setLength(0);
+    setWidth(0);
+    setDepth1(0);
+    setDepth2(0);
+    setDiameter(0);
+    setBase(0);
+    setHeight(0);
+  };
+
   const triggerModal = () => {
     setOpenModal(!openModal);
+    if (!openModal) {
+      setVolume(0);
+    }
   };
 
   const handleChange = (
     event: MouseEvent<HTMLElement>,
-    newAlignment: string,
+    newAlignment: PoolShapes,
   ) => {
+    if (newAlignment === null) {
+      return;
+    };
     setShape(newAlignment);
+    setVolume(0);
   };
 
   const calculateVolume = (
@@ -37,6 +63,8 @@ export const Services: FunctionComponent = (): ReactElement => {
     _width?: number,
     _depth2?: number,
     _diameter?: number,
+    _largeDiameter?: number,
+    _smallDiameter?: number,
     _base?: number,
     _height?: number,
   ) => {
@@ -51,17 +79,15 @@ export const Services: FunctionComponent = (): ReactElement => {
         return setVolume(Math.PI * (radius * radius) * ((_depth1 + _depth2) / 2) * 7.5);
       };
       return setVolume(Math.PI * (radius * radius) * _depth1 * 7.5);
-    } else if (_shape === 'triangular' && _base && _height) {
-      const cubicVolume = !_depth2 ? (_base * _height * _depth1) / 2 : (_base * _height * (_depth1 + _depth2) / 2) / 2;
+    } else if (_shape === 'irregular' && _largeDiameter && _smallDiameter && _length) {
+      const cubicVolume = !_depth2 ? (
+        0.45 * (_largeDiameter + _smallDiameter) * _length * _depth1 
+      ) : ( 
+        0.45 * (_largeDiameter + _smallDiameter) * _length * (_depth1 + _depth2) / 2
+      );
+      console.log(cubicVolume);
       return setVolume(cubicVolume * 7.5);
     }
-    setLength(0);
-    setWidth(0);
-    setDepth1(0);
-    setDepth2(0);
-    setDiameter(0);
-    setBase(0);
-    setHeight(0);
   };
 
   const style = {
@@ -159,10 +185,10 @@ export const Services: FunctionComponent = (): ReactElement => {
                   >
                     <ToggleButton value="rectangular">Rectangular</ToggleButton>
                     <ToggleButton value="circular">Circular</ToggleButton>
-                    <ToggleButton value="triangular">Triangular</ToggleButton>
+                    <ToggleButton value="irregular">Habichuela</ToggleButton>
                   </ToggleButtonGroup>
                   <div className={styles.modalContent}>
-                    { shape === 'rectangular' && (
+                    { (shape === 'rectangular' || shape === 'irregular') && (
                       <Fragment>
                         <TextField
                           id="outlined-number"
@@ -179,6 +205,25 @@ export const Services: FunctionComponent = (): ReactElement => {
                             ),
                           }}
                         />
+                        <TextField
+                          id="outlined-number"
+                          label="Ancho de la piscina"
+                          type="number"
+                          value={width}
+                          onChange={(e) => setWidth(parseInt(e.target.value))}
+                          sx={{ marginBottom: '15px', width: '80%' }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                {'ft'}
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Fragment>
+                    )}
+                    { shape === 'rectangular' && (
+                      <Fragment>
                         <TextField
                           id="outlined-number"
                           label="Ancho de la piscina"
@@ -213,14 +258,14 @@ export const Services: FunctionComponent = (): ReactElement => {
                         }}
                       />
                     )}
-                    { shape === 'triangular' && (
+                    { shape === 'irregular' && (
                       <Fragment>
                         <TextField
                           id="outlined-number"
-                          label="Base de la piscina"
+                          label="Diámetro mayor"
                           type="number"
-                          value={base}
-                          onChange={(e) => setBase(parseInt(e.target.value))}
+                          value={largeDiameter}
+                          onChange={(e) => setLargeDiameter(parseInt(e.target.value))}
                           sx={{ marginBottom: '15px', width: '80%' }}
                           InputProps={{
                             endAdornment: (
@@ -232,10 +277,10 @@ export const Services: FunctionComponent = (): ReactElement => {
                         />
                         <TextField
                           id="outlined-number"
-                          label="Altura de la piscina"
+                          label="Diámetro menor"
                           type="number"
-                          value={height}
-                          onChange={(e) => setHeight(parseInt(e.target.value))}
+                          value={smallDiameter}
+                          onChange={(e) => setSmallDiameter(parseInt(e.target.value))}
                           sx={{ marginBottom: '15px', width: '80%' }}
                           InputProps={{
                             endAdornment: (
@@ -286,12 +331,14 @@ export const Services: FunctionComponent = (): ReactElement => {
                       onClick={() => calculateVolume(
                         shape,
                         depth1,
-                        length > 0 ? length : undefined,
-                        width > 0 ? width : undefined,
-                        depth2 > 0 ? depth2 : undefined,
-                        diameter > 0 ? diameter : undefined,
-                        base > 0 ? base : undefined,
-                        height > 0 ? height : undefined,
+                        length,
+                        width,
+                        depth2,
+                        diameter,
+                        largeDiameter,
+                        smallDiameter,
+                        base,
+                        height,
                       )}
                     >
                       {'Calcular'}
