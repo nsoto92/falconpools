@@ -2,9 +2,11 @@ import React, { FunctionComponent, ReactElement, useState, MouseEvent, Fragment,
 import { Section } from '../../components/Section/Section';
 import { Card } from '../../components/Card/Card';
 import styles from './Services.module.css';
-import { Box, Button, InputAdornment, Modal, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Box, Button, IconButton, InputAdornment, Modal, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { useIsMobile } from '../../utils/isMobile';
 import { services } from '../../locales/es';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 export type PoolShapes = 'rectangular' | 'circular' | 'irregular';
 
@@ -121,6 +123,8 @@ export const Services: FunctionComponent = (): ReactElement => {
     boxShadow: 24,
     p: 4,
     maxWidth: '900px',
+    maxHeight:  isMobile ? '80dvh' : '100vh',
+    overflowY: 'scroll' as 'scroll',
   };
 
   return (
@@ -170,7 +174,7 @@ export const Services: FunctionComponent = (): ReactElement => {
               size={isMobile ? 'small' : 'medium'}
               variant="contained"
               href={'https://falconpoolsprhablaclaro.as.me/'}
-              sx={{ marginBottom: '15px'}}
+              sx={{ marginBottom: '15px' }}
             >
               {'Estimados Aquí'}
             </Button>
@@ -181,6 +185,8 @@ export const Services: FunctionComponent = (): ReactElement => {
             >
               {'Calculadora de Galones'}
             </Button>
+
+            {/* Modal */}
             <Modal
               open={openModal}
               onClose={triggerModal}
@@ -189,13 +195,24 @@ export const Services: FunctionComponent = (): ReactElement => {
             >
               <Box sx={{...style}}>
                 <div className={styles.modalWrapper}>
-                  <Typography
-                    variant={isMobile ?'h5' : 'h4'}
-                    align={'center'}
-                    sx={{ marginBottom: '25px' }}
-                  >
-                    {'Calculadora de Galones'}
-                  </Typography>
+                  <div className={styles.modalHeader}>
+                    <Typography
+                      variant={isMobile ?'h5' : 'h4'}
+                      align={'center'}
+                      sx={{ marginBottom: '25px' }}
+                    >
+                      {'Calculadora de Galones'}
+                    </Typography>
+                    <IconButton
+                      onClick={() => setOpenModal(false)}
+                      edge="start"
+                      color="inherit"
+                      aria-label="menu"
+                      sx={{ mr: 2, position: 'absolute', right: isMobile ? '-45px' : '-35px', bottom: '45px' }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
                   <ToggleButtonGroup
                     color="primary"
                     value={shape}
@@ -246,7 +263,7 @@ export const Services: FunctionComponent = (): ReactElement => {
                     {(shape === 'rectangular' || shape === 'irregular') && (
                       <TextField
                         id="outlined-number"
-                      label={`Largo de la piscina ${shape === 'irregular' ? '(C)' : '(A)'}}`}
+                      label={`Largo de la piscina ${shape === 'irregular' ? '(C)' : '(A)'}`}
                         type="number"
                         value={length}
                         onChange={(e) => setLength(parseInt(e.target.value))}

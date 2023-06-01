@@ -55,6 +55,14 @@
   width: 100%;
 }
 
+.modalHeader {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .modalContent {
   display: flex;
   margin-top: 25px;
