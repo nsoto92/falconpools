@@ -64,6 +64,10 @@
   width: 100%;
 }
 
+.modalPicture {
+  margin-top: 25px;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -84,5 +88,9 @@ input::-webkit-inner-spin-button {
   .content {
     font-size: 16px;
     line-height: 25px;
+  }
+
+  .modalPicture {
+    max-width: 250px;
   }
 }

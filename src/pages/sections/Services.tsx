@@ -26,7 +26,7 @@ export const Services: FunctionComponent = (): ReactElement => {
 
   useEffect(() => {
     resetValues();
-  }, [volume]);
+  }, [shape, openModal]);
 
   const resetValues = () => {
     setLength(0);
@@ -36,6 +36,8 @@ export const Services: FunctionComponent = (): ReactElement => {
     setDiameter(0);
     setBase(0);
     setHeight(0);
+    setLargeDiameter(0);
+    setSmallDiameter(0);
   };
 
   const triggerModal = () => {
@@ -70,23 +72,41 @@ export const Services: FunctionComponent = (): ReactElement => {
   ) => {
     if (_shape === 'rectangular' && _length && _width) {
       if (_depth2) {
-        return setVolume(_length * _width * ((_depth1 + _depth2) / 2) * 7.5);
+        return setVolume(Math.floor(_length * _width * ((_depth1 + _depth2) / 2) * 7.5));
       };
-      return setVolume(_length * _width * _depth1 * 7.5);
+      return setVolume(Math.floor(_length * _width * _depth1 * 7.5));
     } else if (_shape === 'circular' && _diameter) {
-      const radius = _diameter / 2;
+      const radius = _diameter;
       if (_depth2) {
-        return setVolume(Math.PI * (radius * radius) * ((_depth1 + _depth2) / 2) * 7.5);
+        return setVolume(Math.floor(Math.PI * (radius * radius) * ((_depth1 + _depth2) / 2) * 7.5));
       };
-      return setVolume(Math.PI * (radius * radius) * _depth1 * 7.5);
+      return setVolume(Math.floor(Math.PI * (radius * radius) * _depth1 * 7.5));
     } else if (_shape === 'irregular' && _largeDiameter && _smallDiameter && _length) {
       const cubicVolume = !_depth2 ? (
         0.45 * (_largeDiameter + _smallDiameter) * _length * _depth1 
       ) : ( 
         0.45 * (_largeDiameter + _smallDiameter) * _length * (_depth1 + _depth2) / 2
       );
-      console.log(cubicVolume);
-      return setVolume(cubicVolume * 7.5);
+      return setVolume(Math.floor(cubicVolume * 7.5));
+    }
+  };
+
+  const getShapeImage = () => {
+    switch (shape) {
+      case 'rectangular':
+        return (
+          <img className={styles.modalPicture} src={'/assets/PoolShape_Rectangle.png'} alt={'rectangular pool'}/>
+        );
+      case 'circular':
+        return (
+          <img className={styles.modalPicture} src={'/assets/PoolShape_Circular.png'} alt={'circular pool'}/>
+        );
+      case 'irregular':
+        return (
+          <img className={styles.modalPicture} src={'/assets/PoolShape_Oblong.png'} alt={'oblong pool'}/>
+        );
+      default:
+        return;
     }
   };
 
@@ -187,82 +207,13 @@ export const Services: FunctionComponent = (): ReactElement => {
                     <ToggleButton value="circular">Circular</ToggleButton>
                     <ToggleButton value="irregular">Habichuela</ToggleButton>
                   </ToggleButtonGroup>
+                  {getShapeImage()}
                   <div className={styles.modalContent}>
-                    { (shape === 'rectangular' || shape === 'irregular') && (
+                    {shape === 'irregular' && (
                       <Fragment>
                         <TextField
                           id="outlined-number"
-                          label="Largo de la piscina"
-                          type="number"
-                          value={length}
-                          onChange={(e) => setLength(parseInt(e.target.value))}
-                          sx={{ marginBottom: '15px', width: '80%' }}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                {'ft'}
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                        <TextField
-                          id="outlined-number"
-                          label="Ancho de la piscina"
-                          type="number"
-                          value={width}
-                          onChange={(e) => setWidth(parseInt(e.target.value))}
-                          sx={{ marginBottom: '15px', width: '80%' }}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                {'ft'}
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </Fragment>
-                    )}
-                    { shape === 'rectangular' && (
-                      <Fragment>
-                        <TextField
-                          id="outlined-number"
-                          label="Ancho de la piscina"
-                          type="number"
-                          value={width}
-                          onChange={(e) => setWidth(parseInt(e.target.value))}
-                          sx={{ marginBottom: '15px', width: '80%' }}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                {'ft'}
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </Fragment>
-                    )}
-                    { shape === 'circular' && (
-                      <TextField
-                        id="outlined-number"
-                        label="Diametro de piscina"
-                        type="number"
-                        value={diameter}
-                        onChange={(e) => setDiameter(parseInt(e.target.value))}
-                        sx={{ marginBottom: '15px', width: '80%' }}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              {'ft'}
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    )}
-                    { shape === 'irregular' && (
-                      <Fragment>
-                        <TextField
-                          id="outlined-number"
-                          label="Diámetro mayor"
+                          label="Diámetro mayor (A)"
                           type="number"
                           value={largeDiameter}
                           onChange={(e) => setLargeDiameter(parseInt(e.target.value))}
@@ -277,7 +228,7 @@ export const Services: FunctionComponent = (): ReactElement => {
                         />
                         <TextField
                           id="outlined-number"
-                          label="Diámetro menor"
+                          label="Diámetro menor (B)"
                           type="number"
                           value={smallDiameter}
                           onChange={(e) => setSmallDiameter(parseInt(e.target.value))}
@@ -292,10 +243,61 @@ export const Services: FunctionComponent = (): ReactElement => {
                         />
                       </Fragment>
                     )}
+                    {(shape === 'rectangular' || shape === 'irregular') && (
+                      <TextField
+                        id="outlined-number"
+                      label={`Largo de la piscina ${shape === 'irregular' ? '(C)' : '(A)'}}`}
+                        type="number"
+                        value={length}
+                        onChange={(e) => setLength(parseInt(e.target.value))}
+                        sx={{ marginBottom: '15px', width: '80%' }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              {'ft'}
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
+                    { shape === 'rectangular' && (
+                      <TextField
+                        id="outlined-number"
+                        label="Ancho de la piscina(B)"
+                        type="number"
+                        value={width}
+                        onChange={(e) => setWidth(parseInt(e.target.value))}
+                        sx={{ marginBottom: '15px', width: '80%' }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              {'ft'}
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
+                    { shape === 'circular' && (
+                      <TextField
+                        id="outlined-number"
+                        label="Radio de piscina (R)"
+                        type="number"
+                        value={diameter}
+                        onChange={(e) => setDiameter(parseInt(e.target.value))}
+                        sx={{ marginBottom: '15px', width: '80%' }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              {'ft'}
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
                     <TextField
                       id="outlined-number"
                       label="Profundidad 1"
-                      helperText="*Profundidad de la parte menos profunda de la piscina"
+                      helperText="*Parte menos profunda de la piscina"
                       type="number"
                       value={depth1}
                       required
@@ -312,7 +314,7 @@ export const Services: FunctionComponent = (): ReactElement => {
                     <TextField
                       id="outlined-number"
                       label="Profundidad 2 (Opcional)"
-                      helperText="*Profundidad de la parte más profunda de la piscina"
+                      helperText="*Parte más profunda de la piscina"
                       type="number"
                       value={depth2}
                       onChange={(e) => setDepth2(parseInt(e.target.value))}
