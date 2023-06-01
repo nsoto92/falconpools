@@ -1,15 +1,11 @@
-import React, { FunctionComponent, ReactElement, useState, MouseEvent, Fragment, useEffect } from 'react';
+import React, { FunctionComponent, ReactElement, useState, MouseEvent, useEffect } from 'react';
 import { Section } from '../../components/Section/Section';
 import { Card } from '../../components/Card/Card';
 import styles from './Services.module.css';
-import { Box, Button, IconButton, InputAdornment, Modal, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useIsMobile } from '../../utils/isMobile';
 import { services } from '../../locales/es';
-import CloseIcon from '@mui/icons-material/Close';
-
-
-export type PoolShapes = 'rectangular' | 'circular' | 'irregular';
-
+import CalculatorModal, { PoolShapes } from '../../components/CalculatorModal/CalculatorModal';
 
 export const Services: FunctionComponent = (): ReactElement => {
   const isMobile = useIsMobile();
@@ -93,40 +89,6 @@ export const Services: FunctionComponent = (): ReactElement => {
     }
   };
 
-  const getShapeImage = () => {
-    switch (shape) {
-      case 'rectangular':
-        return (
-          <img className={styles.modalPicture} src={'/assets/PoolShape_Rectangle.png'} alt={'rectangular pool'}/>
-        );
-      case 'circular':
-        return (
-          <img className={styles.modalPicture} src={'/assets/PoolShape_Circular.png'} alt={'circular pool'}/>
-        );
-      case 'irregular':
-        return (
-          <img className={styles.modalPicture} src={'/assets/PoolShape_Oblong.png'} alt={'oblong pool'}/>
-        );
-      default:
-        return;
-    }
-  };
-
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '80%',
-    bgcolor: 'ghostwhite',
-    border: '1px solid #000',
-    boxShadow: 24,
-    p: 4,
-    maxWidth: '900px',
-    maxHeight:  isMobile ? '80dvh' : '100vh',
-    overflowY: 'scroll' as 'scroll',
-  };
-
   return (
     <Section color={'white'}>
       <div className={styles.wrapper}>
@@ -140,7 +102,7 @@ export const Services: FunctionComponent = (): ReactElement => {
         <div className={styles.services}>
           {services.map((service, index) => {
             return (
-              <Card key={index} index={index}>
+              <Card key={index}>
                 <Typography
                   variant={isMobile ?'h5' : 'h4'}
                   align={'center'}
@@ -185,199 +147,34 @@ export const Services: FunctionComponent = (): ReactElement => {
             >
               {'Calculadora de Galones'}
             </Button>
-
-            {/* Modal */}
-            <Modal
-              open={openModal}
-              onClose={triggerModal}
-              aria-labelledby="parent-modal-title"
-              aria-describedby="parent-modal-description"
-            >
-              <Box sx={{...style}}>
-                <div className={styles.modalWrapper}>
-                  <div className={styles.modalHeader}>
-                    <Typography
-                      variant={isMobile ?'h5' : 'h4'}
-                      align={'center'}
-                      sx={{ marginBottom: '25px' }}
-                    >
-                      {'Calculadora de Galones'}
-                    </Typography>
-                    <IconButton
-                      onClick={() => setOpenModal(false)}
-                      edge="start"
-                      color="inherit"
-                      aria-label="menu"
-                      sx={{ mr: 2, position: 'absolute', right: isMobile ? '-45px' : '-35px', bottom: '45px' }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <ToggleButtonGroup
-                    color="primary"
-                    value={shape}
-                    exclusive
-                    onChange={handleChange}
-                    aria-label="Platform"
-                  >
-                    <ToggleButton value="rectangular">Rectangular</ToggleButton>
-                    <ToggleButton value="circular">Circular</ToggleButton>
-                    <ToggleButton value="irregular">Habichuela</ToggleButton>
-                  </ToggleButtonGroup>
-                  {getShapeImage()}
-                  <div className={styles.modalContent}>
-                    {shape === 'irregular' && (
-                      <Fragment>
-                        <TextField
-                          id="outlined-number"
-                          label="Diámetro mayor (A)"
-                          type="number"
-                          value={largeDiameter}
-                          onChange={(e) => setLargeDiameter(parseInt(e.target.value))}
-                          sx={{ marginBottom: '15px', width: '80%' }}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                {'ft'}
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                        <TextField
-                          id="outlined-number"
-                          label="Diámetro menor (B)"
-                          type="number"
-                          value={smallDiameter}
-                          onChange={(e) => setSmallDiameter(parseInt(e.target.value))}
-                          sx={{ marginBottom: '15px', width: '80%' }}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                {'ft'}
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </Fragment>
-                    )}
-                    {(shape === 'rectangular' || shape === 'irregular') && (
-                      <TextField
-                        id="outlined-number"
-                      label={`Largo de la piscina ${shape === 'irregular' ? '(C)' : '(A)'}`}
-                        type="number"
-                        value={length}
-                        onChange={(e) => setLength(parseInt(e.target.value))}
-                        sx={{ marginBottom: '15px', width: '80%' }}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              {'ft'}
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    )}
-                    { shape === 'rectangular' && (
-                      <TextField
-                        id="outlined-number"
-                        label="Ancho de la piscina(B)"
-                        type="number"
-                        value={width}
-                        onChange={(e) => setWidth(parseInt(e.target.value))}
-                        sx={{ marginBottom: '15px', width: '80%' }}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              {'ft'}
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    )}
-                    { shape === 'circular' && (
-                      <TextField
-                        id="outlined-number"
-                        label="Radio de piscina (R)"
-                        type="number"
-                        value={diameter}
-                        onChange={(e) => setDiameter(parseInt(e.target.value))}
-                        sx={{ marginBottom: '15px', width: '80%' }}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              {'ft'}
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    )}
-                    <TextField
-                      id="outlined-number"
-                      label="Profundidad 1"
-                      helperText="*Parte menos profunda de la piscina"
-                      type="number"
-                      value={depth1}
-                      required
-                      onChange={(e) => setDepth1(parseInt(e.target.value))}
-                      sx={{ marginBottom: '15px', width: '80%' }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            {'ft'}
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                    <TextField
-                      id="outlined-number"
-                      label="Profundidad 2 (Opcional)"
-                      helperText="*Parte más profunda de la piscina"
-                      type="number"
-                      value={depth2}
-                      onChange={(e) => setDepth2(parseInt(e.target.value))}
-                      sx={{ marginBottom: '15px', width: '80%' }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            {'ft'}
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                    <Button
-                      size={isMobile ? 'small' : 'medium'}
-                      variant="contained"
-                      onClick={() => calculateVolume(
-                        shape,
-                        depth1,
-                        length,
-                        width,
-                        depth2,
-                        diameter,
-                        largeDiameter,
-                        smallDiameter,
-                        base,
-                        height,
-                      )}
-                    >
-                      {'Calcular'}
-                    </Button>
-                    {
-                      volume > 0 &&
-                      <Typography
-                        variant={'body1'}
-                        align={'center'}
-                        sx={{ marginTop: '15px' }}
-                      >
-                        {`El volumen de su piscina es de ${volume} galones`}
-                      </Typography>
-                    }
-                  </div>
-                </div>
-              </Box>
-            </Modal>
           </div>
         </div>
+        <CalculatorModal
+          shape={shape}
+          open={openModal}
+          triggerModal={triggerModal}
+          depth1={depth1}
+          setDepth1={setDepth1}
+          depth2={depth2}
+          setDepth2={setDepth2}
+          length={length}
+          setLength={setLength}
+          width={width}
+          setWidth={setWidth}
+          diameter={diameter}
+          setDiameter={setDiameter}
+          largeDiameter={largeDiameter}
+          setLargeDiameter={setLargeDiameter}
+          smallDiameter={smallDiameter}
+          setSmallDiameter={setSmallDiameter}
+          base={base}
+          setBase={setBase}
+          height={height}
+          setHeight={setHeight}
+          volume={volume}
+          handleChange={handleChange}
+          onCalculateVolume={calculateVolume}
+        />
       </div>
     </Section>
   );

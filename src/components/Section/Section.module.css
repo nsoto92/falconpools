@@ -1,16 +1,5 @@
 .wrapper {
   display: flex;
-  width: 100vw;
-}
-
-.gray {
-  background-color: var(--gray);
-}
-
-.white {
   background-color: var(--white);
-}
-
-.blue {
-  background-color: rgb(145,198,240);
+  width: 100vw;
 }

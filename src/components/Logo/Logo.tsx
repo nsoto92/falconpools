@@ -3,9 +3,8 @@ import React, { FunctionComponent, ReactElement } from 'react';
 import styles from './Logo.module.css';
 
 export interface LogoProps {
-  type?: "header" | "footer" | "navbar";
+  type?: "header" | "navbar";
 }
-
 
 export const Logo: FunctionComponent<LogoProps> = (props): ReactElement => {
 

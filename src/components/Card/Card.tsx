@@ -4,7 +4,6 @@ import styles from './Card.module.css';
 
 export interface CardProps {
   children: ReactElement | ReactElement[];
-  index?: number;
 }
 
 export const Card: FunctionComponent<CardProps> = (props): ReactElement => {
@@ -21,11 +20,6 @@ export const Card: FunctionComponent<CardProps> = (props): ReactElement => {
 
   const setWrapperStyle = () => {
     const s = [styles.wrapper];
-    // if (props.index) {
-    //   if (props.index % 2 === 0 || props.index === 0) {
-    //     s.push(styles.even);
-    //   };
-    // }
     if (isVisible) {
       s.push(styles.visible);
     }
