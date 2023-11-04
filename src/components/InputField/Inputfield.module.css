@@ -1,0 +1,236 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 12px;
+  font-family: var(--font-body);
+}
+
+.requiredAsterisk {
+  color: var(--prn-orange);
+}
+
+.field {
+  width: 100%;
+  border: 1px solid var(--gray);
+  border-radius: 15px;
+  background: inherit;
+  transition: border 0.2s ease-in-out;
+  resize: none;
+  height: 48px;
+  color: var(--black);
+  padding: 0;
+  padding-left: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.field.error {
+  color: var(--error);
+}
+
+.field:hover {
+  border: 1px solid var(--black);
+}
+
+.wrapper.dark .field {
+  color: var(--white);
+}
+
+.wrapper.dark .field:hover {
+  border-color: var(--white);
+}
+
+.label {
+  position: absolute;
+  margin-top: -10px;
+  margin-left: 15px;
+  background-color: var(--white);
+  padding: 0 5px;
+  font-size: 13px;
+  color: var(--medium-gray);
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: calc(100% - 40px);
+}
+
+.field::placeholder {
+  color: var(--medium-gray);
+  font-family: var(--font-body);
+}
+
+.wrapper.dark .field::placeholder {
+  color: var(--gray);
+}
+
+.fieldTextArea {
+  font-size: 16px;
+  font-family: var(--font-body);
+  padding-top: 12px;
+  padding-left: 20px;
+  height: 96px;
+  max-height: 160px;
+  box-sizing: border-box;
+}
+
+.wrapper:hover .label {
+  color: var(--black);
+}
+
+.wrapper.dark:hover .label {
+  color: var(--white);
+}
+
+.subText {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.helper {
+  text-align: left;
+  margin: 0 20px;
+}
+
+.characterLimit {
+  font-size: 13px;
+  color: var(--medium-gray);
+  text-align: right;
+  margin: 0 20px 0 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.characterLimit.limitReached {
+  color: var(--error);
+}
+
+.icon {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fieldSelection.mediumGrayBackground {
+  background-color: var(--medium-gray);
+}
+
+.fieldSelection {
+  background-color: var(--prn-blue);
+  display: flex;
+  height: 25px;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.fieldSelectionButton {
+  margin-top: 2px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 12px;
+}
+
+.wrapper.hasIcon .field {
+  padding-right: 44px;
+}
+
+.wrapper:focus-within .field {
+  outline: none;
+  border: 2px solid var(--prn-blue);
+}
+
+.wrapper.dark:focus-within .field {
+  border-color: var(--prn-blue-dark-mode);
+}
+
+.wrapper.dark .label {
+  color: var(--white);
+  background-color: var(--black);
+}
+
+.wrapper.grayBackground .label {
+  background-color: var(--light-gray);
+}
+
+.wrapper.grayBackground.dark .label {
+  background-color: var(--light-gray-dark-mode);
+}
+
+.wrapper:focus-within .label {
+  color: var(--prn-blue);
+}
+
+.wrapper.dark:focus-within .label {
+  color: var(--prn-blue-dark-mode);
+}
+
+.wrapper.error .label,
+.wrapper:focus-within .label.error {
+  color: var(--error);
+}
+
+.wrapper.dark.error .label,
+.wrapper.dark:focus-within .label.error {
+  color: var(--error-dark-mode);
+}
+
+.wrapper.disabled .icon {
+  cursor: not-allowed;
+}
+
+.wrapper.error .field {
+  border-color: var(--error);
+}
+
+.wrapper.disabled .field {
+  cursor: not-allowed;
+  border: 1px solid var(--gray);
+}
+
+.wrapper.disabled .field::placeholder,
+.wrapper.disabled .field,
+.wrapper.disabled .requiredAsterisk,
+.wrapper.disabled .label {
+  color: var(--gray);
+}
+
+.wrapper.disabled.error .helper {
+  color: var(--error);
+}
+
+.wrapper.error .field:hover {
+  border-color: var(--error);
+}
+
+.wrapper.disabled .field:hover {
+  border-color: var(--gray);
+}
+
+.wrapper.dark.error .field {
+  border-color: var(--error-dark-mode);
+}
+
+.wrapper.dark.error .field:hover {
+  border-color: var(--error-dark-mode);
+}
+
+@media (width <= 400px) {
+  .wrapper {
+    min-width: 247px;
+  }
+}
